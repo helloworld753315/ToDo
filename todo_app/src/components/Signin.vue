@@ -1,11 +1,11 @@
 <template>
   <div class="signin">
-    <h2>Sign in</h2>
+    <h2>サインイン</h2>
     <input type="text" placeholder="Username" v-model="username">
     <input type="password" placeholder="Password" v-model="password">
-    <button @click="signIn">Signin</button>
-    <p>You don't have an account?
-      <router-link to="/signup">create account now!!</router-link>
+    <button @click="signIn" class="btn btn-info" >Signin</button>
+    <p>アカウントをお持ちではない？
+      <router-link to="/signup">こちらから作成できます</router-link>
     </p>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
     signIn: function () {
       firebase.auth().signInWithEmailAndPassword(this.username, this.password).then(
         user => {
-          alert('Success!')
+          alert('ログインしました')
           this.$router.push('/')
         },
         err => {
