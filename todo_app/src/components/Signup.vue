@@ -1,7 +1,7 @@
 <template>
   <div class="signup">
     <h2>サインアップ</h2>
-    <input type="text" placeholder="Username" v-model="username">
+    <input type="text" placeholder="Mail" v-model="username">
     <input type="password" placeholder="Password" v-model="password">
     <button @click="signUp" class="btn btn-info" >Register</button>
     <p>サインインはこちらから
@@ -26,12 +26,21 @@ export default {
       firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
         .then(user => {
           alert('アカウントを作成: ', user.email)
+          const db = firebase.firestore()
+          db.collection('users').add({name: this.username, contents: []})
+            .then(() => {
+              console.log('Document successfully written!')
+            })
+            .catch((error) => {
+              console.error('Error writing document: ', error)
+            })
         })
         .catch(error => {
           alert(error.message)
         })
     }
   }
+
 }
 
 </script>

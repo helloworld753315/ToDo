@@ -6,23 +6,26 @@
     <h1>ようこそ{{ name }}さん</h1>
     <h1>{{ msg }}</h1>
     <input type="text" v-model="newToDo">
-    <button class="btn btn-info" >追加</button>
-    <table>
-      <tbody>
-      </tbody>
-    </table>
+    <button class="btn btn-info" @click="addTodo">追加</button>
+    <ul class="card">
+      <li v-for="item in todo_items" :key = "item.id" class="card-body">
+        {{item}}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-
+// const db = firebase.firestore()
 export default {
   name: 'Top',
   data () {
     return {
       msg: 'あなたのやるべきことをまとめましょう',
-      name: firebase.auth().currentUser.email
+      name: firebase.auth().currentUser.email,
+      newToDo: '',
+      todo_items: []
     }
   },
   methods: {
@@ -33,6 +36,9 @@ export default {
         .then(() => {
           this.$router.push('/signin')
         })
+    },
+    addTodo: function () {
+      this.todo_items.push(this.newToDo)
     }
   }
 }
