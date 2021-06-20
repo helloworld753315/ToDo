@@ -18,6 +18,7 @@
 <script>
 import firebase from 'firebase'
 // const db = firebase.firestore()
+
 export default {
   name: 'Top',
   data () {
@@ -39,6 +40,11 @@ export default {
     },
     addTodo: function () {
       this.todo_items.push(this.newToDo)
+    /*
+      db.collection('users').doc(this.name).update({
+        contents: db.FieldValue.arrayUnion('hoge')
+      })
+    */
     }
   }
 }

@@ -27,6 +27,7 @@ export default {
         .then(user => {
           alert('アカウントを作成: ', user.email)
           const db = firebase.firestore()
+          /*
           db.collection('users').add({name: this.username, contents: []})
             .then(() => {
               console.log('Document successfully written!')
@@ -34,6 +35,8 @@ export default {
             .catch((error) => {
               console.error('Error writing document: ', error)
             })
+            */
+          db.collection('users').doc(this.username).set({ title: [], contents: [] })
         })
         .catch(error => {
           alert(error.message)
