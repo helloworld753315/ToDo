@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-// const db = firebase.firestore()
+import firebase from '@/firebase/firestore'
+const db = firebase.firestore()
 
 export default {
   name: 'Top',
@@ -40,11 +40,10 @@ export default {
     },
     addTodo: function () {
       this.todo_items.push(this.newToDo)
-    /*
+      console.log(firebase.auth().currentUser.email)
       db.collection('users').doc(this.name).update({
-        contents: db.FieldValue.arrayUnion('hoge')
+        contents: firebase.firestore.FieldValue.arrayUnion('hoge')
       })
-    */
     }
   }
 }

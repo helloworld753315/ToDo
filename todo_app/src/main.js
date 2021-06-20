@@ -3,17 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import firebase from 'firebase'
-import 'firebase/firestore'
+// import firebase from 'firebase'
 import 'bootstrap/dist/css/bootstrap.css' // add
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
-
+/*
 // Initialize Firebase
 if (!firebase.apps.length) {
   // Your web app's Firebase configuration
-  var firebaseConfig = {
+  const firebaseConfig = {
     apiKey: 'AIzaSyBGuDQnMoJkWrgXHLyZOd4y57vfqWKVho0',
     authDomain: 'todo-e3407.firebaseapp.com',
     projectId: 'todo-e3407',
@@ -23,6 +22,7 @@ if (!firebase.apps.length) {
   }
   firebase.initializeApp(firebaseConfig)
 }
+*/
 
 /* eslint-disable no-new */
 new Vue({
