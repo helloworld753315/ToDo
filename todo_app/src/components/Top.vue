@@ -4,7 +4,6 @@
       <button class='btn btn-info ' @click='signOut'>Sign out</button>
     </div>
     <h1>ようこそ{{ name }}さん</h1>
-    <h1>{{ msg }}</h1>
     <input type="text" v-model="newToDo">
     <button class="btn btn-info" @click="addTodo">追加</button>
     <ul class="card">
@@ -29,6 +28,13 @@ export default {
       todo_items: []
     }
   },
+  created: function () {
+    db.collection('users').doc(this.name)
+      .onSnapshot((doc) => {
+        console.log('Current data: ', doc.get('contents'))
+        this.todo_items = doc.get('contents')
+      })
+  },
   methods: {
     signOut: function () {
       firebase
@@ -39,11 +45,12 @@ export default {
         })
     },
     addTodo: function () {
-      this.todo_items.push(this.newToDo)
+      // this.todo_items.push(this.newToDo)
       console.log(firebase.auth().currentUser.email)
       db.collection('users').doc(this.name).update({
-        contents: firebase.firestore.FieldValue.arrayUnion('hoge')
+        contents: firebase.firestore.FieldValue.arrayUnion(this.newToDo)
       })
+      this.newToDo = ''
     }
   }
 }
@@ -65,6 +72,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.container input{
+  width: 200px;
+  height: 38px;
 }
 
 </style>
