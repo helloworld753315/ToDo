@@ -6,11 +6,12 @@
     <h1>ようこそ{{ name }}さん</h1>
     <input type="text" v-model="newToDo">
     <button class="btn btn-info" @click="addTodo">追加</button>
-    <ul class="card">
-      <li v-for="item in todo_items" :key = "item.id" class="card-body">
-        {{item}}
-      </li>
-    </ul>
+    <table class="todo">
+      <tr v-for="(item,index) in todo_items" :key = "item.id" class="card-body">
+        <td>{{index}} : {{item}}</td>
+        <td class="button-el"><button class="btn btn-danger" @click="deleteTodo(index)">削除</button></td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
     db.collection('users').doc(this.name)
       .onSnapshot((doc) => {
         console.log('Current data: ', doc.get('contents'))
+        // console.log('test:', doc.get('contents[1]'))
         this.todo_items = doc.get('contents')
       })
   },
@@ -51,6 +53,12 @@ export default {
         contents: firebase.firestore.FieldValue.arrayUnion(this.newToDo)
       })
       this.newToDo = ''
+    },
+    deleteTodo: function (id) {
+      console.log(this.todo_items[id])
+      db.collection('users').doc(this.name).update({
+        contents: firebase.firestore.FieldValue.arrayRemove(this.todo_items[id])
+      })
     }
   }
 }
@@ -77,6 +85,22 @@ a {
 .container input{
   width: 200px;
   height: 38px;
+}
+
+.container .card{
+  margin: 20px auto;
+}
+
+.container .todo{
+  margin: 20px auto;
+}
+
+.container table{
+  width: 800px;
+}
+
+.container table .button-el{
+  width: 60px;
 }
 
 </style>
