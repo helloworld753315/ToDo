@@ -23,17 +23,30 @@ export default {
   name: 'Top',
   data () {
     return {
-      msg: 'あなたのやるべきことをまとめましょう',
+      user_id: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.email,
       newToDo: '',
       todo_items: []
     }
   },
   created: function () {
-    db.collection('users').doc(this.name)
+    console.log(this.user_id)
+    let docRef = db.collection('users').doc(this.user_id)
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data())
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!')
+        db.collection('users').doc(this.user_id).set({ title: [], contents: [] })
+      }
+    }).catch((error) => {
+      console.log('Error getting document:', error)
+    })
+    db.collection('users').doc(this.user_id)
       .onSnapshot((doc) => {
         console.log('Current data: ', doc.get('contents'))
-        // console.log('test:', doc.get('contents[1]'))
         this.todo_items = doc.get('contents')
       })
   },
@@ -48,15 +61,14 @@ export default {
     },
     addTodo: function () {
       // this.todo_items.push(this.newToDo)
-      console.log(firebase.auth().currentUser.email)
-      db.collection('users').doc(this.name).update({
+      db.collection('users').doc(this.user_id).update({
         contents: firebase.firestore.FieldValue.arrayUnion(this.newToDo)
       })
       this.newToDo = ''
     },
     deleteTodo: function (id) {
       console.log(this.todo_items[id])
-      db.collection('users').doc(this.name).update({
+      db.collection('users').doc(this.user_id).update({
         contents: firebase.firestore.FieldValue.arrayRemove(this.todo_items[id])
       })
     }

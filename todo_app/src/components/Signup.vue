@@ -26,17 +26,6 @@ export default {
       firebase.auth().createUserWithEmailAndPassword(this.username, this.password)
         .then(user => {
           alert('アカウントを作成: ', user.email)
-          const db = firebase.firestore()
-          /*
-          db.collection('users').add({name: this.username, contents: []})
-            .then(() => {
-              console.log('Document successfully written!')
-            })
-            .catch((error) => {
-              console.error('Error writing document: ', error)
-            })
-            */
-          db.collection('users').doc(this.username).set({ title: [], contents: [] })
         })
         .catch(error => {
           alert(error.message)
