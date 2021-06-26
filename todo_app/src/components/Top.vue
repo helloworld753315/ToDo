@@ -3,12 +3,12 @@
     <div class="text-right">
       <button class='btn btn-info ' @click='signOut'>Sign out</button>
     </div>
-    <h1>ようこそ{{ name }}さん</h1>
+    <h1 >{{ name }}さんのTODOリスト</h1>
     <input type="text" v-model="newToDo">
     <button class="btn btn-info" @click="addTodo">追加</button>
     <table class="todo">
       <tr v-for="(item,index) in todo_items" :key = "item.id" class="card-body">
-        <td>{{index}} : {{item}}</td>
+        <td>{{item}}</td>
         <td class="button-el"><button class="btn btn-danger" @click="deleteTodo(index)">削除</button></td>
       </tr>
     </table>
