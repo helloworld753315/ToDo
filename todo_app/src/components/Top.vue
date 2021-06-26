@@ -31,20 +31,20 @@ export default {
   },
   created: function () {
     console.log(this.user_id)
-    let docRef = db.collection('users').doc(this.user_id)
+    const docRef = db.collection('users').doc(this.user_id)
 
     docRef.get().then((doc) => {
       if (doc.exists) {
         console.log('Document data:', doc.data())
       } else {
-        // doc.data() will be undefined in this case
+        // doc.data() will be undefined in this caseう
         console.log('No such document!')
         db.collection('users').doc(this.user_id).set({ title: [], contents: [] })
       }
     }).catch((error) => {
       console.log('Error getting document:', error)
     })
-    db.collection('users').doc(this.user_id)
+    docRef
       .onSnapshot((doc) => {
         console.log('Current data: ', doc.get('contents'))
         this.todo_items = doc.get('contents')
