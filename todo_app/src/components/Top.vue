@@ -3,13 +3,13 @@
     <div class="text-right">
       <button class='btn btn-info ' @click='signOut'>Sign out</button>
     </div>
-    <h1 >{{ name }}さんのTODOリスト</h1>
+    <h1>{{ name }}さんのTODOリスト</h1>
     <input type="text" v-model="newToDo">
     <button class="btn btn-info" @click="addTodo">追加</button>
     <table class="todo">
       <tr v-for="(item,index) in todo_items" :key = "item.id" class="card-body">
         <td>{{item}}</td>
-        <td class="button-el"><button class="btn btn-danger" @click="deleteTodo(index)">削除</button></td>
+        <td class="button-el" ><button class="btn btn-danger" @click="deleteTodo(index)">削除</button></td>
       </tr>
     </table>
   </div>
@@ -37,7 +37,7 @@ export default {
       if (doc.exists) {
         console.log('Document data:', doc.data())
       } else {
-        // doc.data() will be undefined in this caseう
+        // doc.data() will be undefined in this case
         console.log('No such document!')
         db.collection('users').doc(this.user_id).set({ title: [], contents: [] })
       }
@@ -78,6 +78,18 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
+html {
+  font-size: 62.5%;
+}
+
+@media screen and (max-width: 896px){
+  h1{
+    font-size: 1rem;
+
+  }
+
+}
+
 h1,
 h2 {
   font-weight: normal;
@@ -94,6 +106,10 @@ a {
   color: #42b983;
 }
 
+.container h1{
+  margin: 30px;
+}
+
 .container input{
   width: 200px;
   height: 38px;
@@ -108,7 +124,7 @@ a {
 }
 
 .container table{
-  width: 800px;
+  width: 80%;
 }
 
 .container table .button-el{
